@@ -2,11 +2,16 @@ import 'package:go_router/go_router.dart';
 import '../../modules/home/ui/home_page.dart';
 import '../../modules/login/ui/login_page.dart';
 import '../../modules/settings/ui/settings_page.dart';
+import '../../modules/splash/splash_page.dart';
 import '../../modules/webview/ui/webview_page.dart';
 
 final router = GoRouter(
-  initialLocation: '/login',
+  initialLocation: '/',
   routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const SplashScreen(),
+    ),
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginPage(),

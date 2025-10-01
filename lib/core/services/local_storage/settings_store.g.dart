@@ -25,12 +25,36 @@ mixin _$SettingsStore on _SettingsStoreBase, Store {
     });
   }
 
+  late final _$userEmailAtom =
+      Atom(name: '_SettingsStoreBase.userEmail', context: context);
+
+  @override
+  String get userEmail {
+    _$userEmailAtom.reportRead();
+    return super.userEmail;
+  }
+
+  @override
+  set userEmail(String value) {
+    _$userEmailAtom.reportWrite(value, super.userEmail, () {
+      super.userEmail = value;
+    });
+  }
+
   late final _$changeThemeAsyncAction =
       AsyncAction('_SettingsStoreBase.changeTheme', context: context);
 
   @override
   Future<void> changeTheme(ThemeMode newThemeMode) {
     return _$changeThemeAsyncAction.run(() => super.changeTheme(newThemeMode));
+  }
+
+  late final _$setUserEmailAsyncAction =
+      AsyncAction('_SettingsStoreBase.setUserEmail', context: context);
+
+  @override
+  Future<void> setUserEmail(String newEmail) {
+    return _$setUserEmailAsyncAction.run(() => super.setUserEmail(newEmail));
   }
 
   late final _$_SettingsStoreBaseActionController =
@@ -48,9 +72,21 @@ mixin _$SettingsStore on _SettingsStoreBase, Store {
   }
 
   @override
+  void _loadUserEmail() {
+    final _$actionInfo = _$_SettingsStoreBaseActionController.startAction(
+        name: '_SettingsStoreBase._loadUserEmail');
+    try {
+      return super._loadUserEmail();
+    } finally {
+      _$_SettingsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-themeMode: ${themeMode}
+themeMode: ${themeMode},
+userEmail: ${userEmail}
     ''';
   }
 }
