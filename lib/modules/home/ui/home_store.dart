@@ -1,6 +1,6 @@
-import 'package:condofy/core/services/local_storage/local_storage_service.dart';
-import 'package:condofy/modules/home/models/condominium_model.dart';
 import 'package:mobx/mobx.dart';
+import '../../../core/services/local_storage/local_storage_service.dart';
+import '../../../models/condominium_model.dart';
 
 part 'home_store.g.dart';
 
@@ -25,7 +25,7 @@ abstract class _HomeStoreBase with Store {
     final mockData = [
       Condominium(id: '1', name: 'Residencial das Flores', address: 'Rua das Palmeiras, 123'),
       Condominium(id: '2', name: 'Condomínio Vista Verde', address: 'Avenida das Árvores, 456'),
-      Condominium(id: '3', name: 'Parque dos Pássaros', address: 'Alameda dos Sabiás, 789'),
+      Condominium(id: '3', name: 'Parque dos Passaros', address: 'Alameda dos Sabiás, 789'),
       Condominium(id: '4', name: 'Edifício Central', address: 'Praça da Matriz, 101'),
       Condominium(id: '5', name: 'Solar das Acácias', address: 'Rua do Sol, 202'),
     ];
@@ -37,6 +37,8 @@ abstract class _HomeStoreBase with Store {
         condo.setFavorite(true);
       }
     }
+
+    mockData.sort((a, b) => b.isFavorite ? 1 : -1);
 
     condominiums.addAll(mockData);
     isLoading = false;
@@ -53,5 +55,10 @@ abstract class _HomeStoreBase with Store {
       favoriteIds.remove(condo.id);
     }
     await _storage.setStringList('favorite_condos', favoriteIds);
+
+    if (condo.isFavorite) {
+      condominiums.remove(condo);
+      condominiums.insert(0, condo);
+    }
   }
 }

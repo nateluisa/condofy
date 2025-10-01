@@ -4,7 +4,9 @@ import 'package:condofy/modules/login/ui/login_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../core/services/local_storage/settings_store.dart';
 import '../modules/home/ui/home_store.dart';
+import '../modules/webview/ui/webview_store.dart';
 
 class AppModule {
   static final getIt = GetIt.I;
@@ -25,5 +27,11 @@ class AppModule {
     getIt.registerFactory<HomeStore>(
           () => HomeStore(getIt<ILocalStorageService>()),
     );
+
+    getIt.registerLazySingleton<SettingsStore>(
+          () => SettingsStore(getIt<ILocalStorageService>()),
+    );
+
+    getIt.registerFactory<WebViewStore>(() => WebViewStore());
   }
 }

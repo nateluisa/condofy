@@ -1,16 +1,25 @@
-# condofy
+Como rodar o projeto 
 
-Um app para síndicos monitorarem e gerenciarem seus condomínios
+Pré-requisitos
+Instalar o Flutter SDK 
+ 
+Instale as dependências:
+flutter pub get
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+Execute o gerador de código (Build Runner):
+Este passo é essencial para que o MobX funcione corretamente, executar o comando no terminal na raiz do projeto.
+flutter pub run build_runner build --delete-conflicting-outputs
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Execute o aplicativo:
+Necessitra que um emulador esteja rodando ou que um dispositivo fisico esteja conectado.
+flutter run
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+Credenciais pra acesso
+Para acessar o aplicativo, utilize as seguintes credenciais mockadas:
+
+E-mail: teste@condofy.com
+
+Senha: 1234

@@ -1,5 +1,8 @@
-import 'package:condofy/core/services/local_storage/local_storage_service.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+
+import '../../../core/services/local_storage/local_storage_service.dart';
+import '../../../core/services/local_storage/settings_store.dart';
 
 part 'login_store.g.dart';
 
@@ -7,6 +10,8 @@ class LoginStore = _LoginStoreBase with _$LoginStore;
 
 abstract class _LoginStoreBase with Store {
   final ILocalStorageService _storage;
+  final SettingsStore _settingsStore = GetIt.I<SettingsStore>();
+
   _LoginStoreBase(this._storage);
 
   @observable
@@ -22,7 +27,7 @@ abstract class _LoginStoreBase with Store {
   String? errorMessage;
 
   @observable
-  bool saveCredentials = false;
+  bool saveCredentials = true;
 
   @observable
   bool isPasswordVisible = false;
@@ -59,10 +64,12 @@ abstract class _LoginStoreBase with Store {
     errorMessage = null;
     await Future.delayed(const Duration(seconds: 2));
 
-    if (email == 'teste@condofy.com' && password == '1234') {
+    if ((email == 'teste@condofy.com') && password == '1234') {
       await _storage.setBool('isUserLoggedIn', true);
-      await _storage.setBool('saveCredentials', saveCredentials);
 
+      await _settingsStore.setUserEmail(email);
+
+      await _storage.setBool('saveCredentials', saveCredentials);
       if (saveCredentials) {
         await _storage.setString('savedEmail', email);
         await _storage.setString('savedPassword', password);
